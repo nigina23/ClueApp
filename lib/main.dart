@@ -1,64 +1,83 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'kalendar.dart';
+import 'Profile.dart';
+import 'Track.dart';
+//import 'login.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 
-
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static const String _title = 'Clue';
+
   @override
   Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
     return MaterialApp(
-      theme:ThemeData(primarySwatch: Colors.amber),
-      title: 'Welcome to Flutter',
-      home: Scaffold(
+      title: _title,
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.deepPurpleAccent,
+        )
+      ),
+      home: MyStatefulWidget(),
+    );
+  }
+}
 
-        appBar: AppBar(
-            leading: Icon(Icons.star),
-            title: const Text('Welcome to Flutter'),
-        ),
-        body: Center(child:Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Container(width: 50,height: 50,color: Colors.blue,),
-          Container(margin:EdgeInsets.all(10),width: 50,height: 50,color: Colors.red,),
-          Container(width: 50,height: 50,color: Colors.green,)
-        ],)),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: const <Widget> [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text('Drawer Header',style: TextStyle(color:Colors.white, fontSize: 24,
-                ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text('Messages'),
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-              ),
-            ],
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}):super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Calendar(),
+    Track(),
+    AdminPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Kalender',
+
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outline),
+            label: 'Tracken',
+
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profil',
+
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
-
-
   }
 }
