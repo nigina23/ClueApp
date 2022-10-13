@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:startup_namer/loginScreen.dart';
 import 'kalendar.dart';
 import 'Profile.dart';
 import 'Track.dart';
+
 //import 'login.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -18,11 +20,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.deepPurpleAccent,
+        appBarTheme: const AppBarTheme(
+          backgroundColor:Color(0xFF9C25F4),
         )
       ),
-      home: MyStatefulWidget(),
+      home: LoginScreen(),
     );
   }
 }
